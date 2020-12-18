@@ -1,4 +1,6 @@
 # Inventory Management System
-helppppppp meeeeee
-finally getting the hang of git from vs code
-muhahahahahahhahahahahahhahaha
+A DBMS to maintain and view the information of
+  a)Supplier
+  b)Products
+  c)Orders
+  d)Categories
