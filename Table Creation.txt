@@ -1,0 +1,88 @@
+CREATE TABLE `mini_project`.`supplier` (
+  `idSupplier` INT NOT NULL AUTO_INCREMENT,
+  `Supplier_Name` VARCHAR(25) NOT NULL,
+  `Enterprise_Name` VARCHAR(50) NULL,
+  `Contact_Number` VARCHAR(15) NULL,
+  `Mobile_Number` VARCHAR(15) NULL,
+  `Email_Id` VARCHAR(30) NULL,
+  `Address` VARCHAR(100) NULL,
+  PRIMARY KEY (`idSupplier`));
+
+  
+  
+CREATE TABLE `mini_project`.`category` (
+  `idcategory` INT NOT NULL AUTO_INCREMENT,
+  `Cat_Name` VARCHAR(20) NULL,
+  PRIMARY KEY (`idcategory`));
+  
+  
+  
+  CREATE TABLE `mini_project`.`product` (
+  `idproduct` INT NOT NULL AUTO_INCREMENT,
+  `Buy_Price` DECIMAL(10,2) NULL,
+  `Sell_Price` DECIMAL(10,2) NULL,
+  `idSupplier` INT NOT NULL,
+  `idCategory` INT NULL,
+  PRIMARY KEY (`idproduct`),
+  INDEX `Fk_Supplier_idx` (`idSupplier` ASC) VISIBLE,
+  INDEX `Fk_Category_idx` (`idCategory` ASC) VISIBLE,
+  CONSTRAINT `Fk_Supplier`
+    FOREIGN KEY (`idSupplier`)
+    REFERENCES `mini_project`.`supplier` (`idSupplier`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+  CONSTRAINT `Fk_Category`
+    FOREIGN KEY (`idCategory`)
+    REFERENCES `mini_project`.`category` (`idcategory`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+	
+	
+	
+CREATE TABLE `mini_project`.`order` (
+  `idorder` INT NOT NULL AUTO_INCREMENT,
+  `Date_Ordered` DATE NULL,
+  `Number_Ordered` INT NULL,
+  `idProduct` INT NOT NULL,
+  `idSupplier` INT NOT NULL,
+  PRIMARY KEY (`idorder`),
+  INDEX `Fk_Order_Product_idx` (`idProduct` ASC) VISIBLE,
+  INDEX `Fk_Order_Supplier_idx` (`idSupplier` ASC) VISIBLE,
+  CONSTRAINT `Fk_Order_Product`
+    FOREIGN KEY (`idProduct`)
+    REFERENCES `mini_project`.`product` (`idProduct`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `Fk_Order_Supplier`
+    FOREIGN KEY (`idSupplier`)
+    REFERENCES `mini_project`.`supplier` (`idSupplier`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+	
+	
+	
+CREATE TABLE `mini_project`.`sell` (
+  `idsell` INT NOT NULL AUTO_INCREMENT,
+  `Date_Sold` DATE NULL,
+  `Number_Sold` INT NULL,
+  `idProduct` INT NOT NULL,
+  PRIMARY KEY (`idsell`),
+  INDEX `Fk_Product_idx` (`idProduct` ASC) VISIBLE,
+  CONSTRAINT `Fk_Product`
+    FOREIGN KEY (`idProduct`)
+    REFERENCES `mini_project`.`product` (`idproduct`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+	
+CREATE TABLE `mini_project`.`stock` (
+  `idstock` INT NOT NULL AUTO_INCREMENT,
+  `Quantity` INT NULL,
+  `idProduct` INT NOT NULL,
+  PRIMARY KEY (`idstock`),
+  INDEX `Fk_Stock_Product_idx` (`idProduct` ASC) VISIBLE,
+  CONSTRAINT `Fk_Stock_Product`
+    FOREIGN KEY (`idProduct`)
+    REFERENCES `mini_project`.`product` (`idProduct`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
