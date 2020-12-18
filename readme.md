@@ -1,1 +1,1 @@
-# Learning git in VScode lol
+# Inventory Management System
